@@ -1,6 +1,7 @@
 package com.lipari.bank.auth;
 
 import com.lipari.bank.auth.model.BankUser;
+import com.lipari.bank.auth.model.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
@@ -9,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
 
 @Service
 @Slf4j
@@ -33,7 +32,9 @@ public class LipariBankUserDetailsService implements UserDetailsService {
         return User.builder()
                 .username(bankUser.getUsername())
                 .password(bankUser.getPassword())
-                .authorities(Collections.emptyList())
+                .authorities(bankUser.getRoles().stream()
+                    .map(Role::getName)
+                    .toArray(String[]::new))
                 .disabled(!bankUser.isEnabled())
                 .build();
     }
