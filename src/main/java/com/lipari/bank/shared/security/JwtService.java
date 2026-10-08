@@ -20,7 +20,7 @@ import java.util.function.Function;
 @Slf4j
 public class JwtService {
 
-    private static final String SECRET = "SuperSecretKey123";
+    private static final String SECRET = "liparibank-development-secret-key-256";
 
     private static final long ACCESS_TOKEN_EXPIRATION = 900_000L;
     private static final long REFRESH_TOKEN_EXPIRATION = 604_800_000L;
