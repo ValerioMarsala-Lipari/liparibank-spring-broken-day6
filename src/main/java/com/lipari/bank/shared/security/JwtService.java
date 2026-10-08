@@ -1,5 +1,6 @@
 package com.lipari.bank.shared.security;
 
+import com.lipari.bank.shared.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -20,16 +21,16 @@ import java.util.function.Function;
 @Slf4j
 public class JwtService {
 
-    private static final String SECRET = "liparibank-development-secret-key-256";
-
     private static final long ACCESS_TOKEN_EXPIRATION = 900_000L;
     private static final long REFRESH_TOKEN_EXPIRATION = 604_800_000L;
     private static final String ISSUER = "liparibank-core-backend";
 
     private final SecretKey signingKey;
 
-    public JwtService() {
-        this.signingKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+    public JwtService(JwtProperties jwtProperties) {
+        this.signingKey = Keys.hmacShaKeyFor(
+            jwtProperties.secret().getBytes(StandardCharsets.UTF_8)
+        );
     }
 
     public String generateAccessToken(UserDetails userDetails) {

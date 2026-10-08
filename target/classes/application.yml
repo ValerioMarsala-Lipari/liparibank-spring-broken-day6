@@ -35,3 +35,7 @@ logging:
   level:
     org.springframework.security: DEBUG
     com.lipari.bank: DEBUG
+
+liparibank:
+  jwt:
+    secret: ${JWT_SECRET:liparibank-development-secret-key-256}
